@@ -350,6 +350,11 @@ func (r *Adaptation) startPlugins() (retErr error) {
 		}
 
 		plugins = append(plugins, p)
+
+		err = r.syncFn(noCtx, p.synchronize)
+		if err != nil {
+			return fmt.Errorf("failed to synchronize plugin %q: %w", name, err)
+		}
 	}
 
 	r.plugins = plugins
